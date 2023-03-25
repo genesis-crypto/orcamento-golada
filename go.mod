@@ -1,3 +1,3 @@
-module github.com/genesis-crypto/orcamento-golada
+module orcamento-golada
 
 go 1.19
