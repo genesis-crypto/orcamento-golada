@@ -20,6 +20,7 @@ func main() {
 	produtos := []orcamento.Produto{
 		{Nome: "Notebook", Valor: 8000, Quantia: 2},
 	}
+
 	orcamento := &orcamento.Orcamento{
 		Produtos: produtos,
 	}
