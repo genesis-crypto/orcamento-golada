@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"orcamento-golada/calculadora"
+	"orcamento-golada/desconto"
 	"orcamento-golada/orcamento"
 )
 
@@ -18,7 +19,7 @@ func main() {
 	}
 
 	produtos := []orcamento.Produto{
-		{Nome: "Notebook", Valor: 8000, Quantia: 2},
+		{Nome: "Notebook", Valor: 8000, Quantia: 10},
 	}
 
 	orcamento := &orcamento.Orcamento{
@@ -26,4 +27,11 @@ func main() {
 	}
 
 	fmt.Println(">> must be", calculadoraPIS.RealizaCalculo(orcamento))
+
+	descontoValor := &desconto.DescontoPorValor{}
+
+	descontoQuantia := &desconto.DescontoPorQuantia{}
+	descontoQuantia.SetNext(descontoValor)
+
+	descontoQuantia.Executa(orcamento)
 }
