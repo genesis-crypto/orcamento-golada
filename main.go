@@ -19,11 +19,16 @@ func main() {
 		Calculadora: calculadoraICMS,
 	}
 
+	calculadoraIHIT := &calculadora.CalculadoraIHIT{
+		Calculadora: calculadoraPIS,
+	}
+
 	orcamentoPrincipal := orcamento.CriaOrcamento([]orcamento.Produto{
 		{Nome: "Notebook", Valor: 8000, Quantia: 10},
+		{Nome: "Notebook", Valor: 4000, Quantia: 1},
 	})
 
-	fmt.Println(">> must be", calculadoraPIS.RealizaCalculo(orcamentoPrincipal))
+	fmt.Println(">> must be", calculadoraIHIT.RealizaCalculo(orcamentoPrincipal))
 
 	descontoValor := &desconto.DescontoPorValor{}
 
