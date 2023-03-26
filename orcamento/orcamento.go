@@ -7,8 +7,9 @@ type Produto struct {
 }
 
 type Orcamento struct {
-	Produtos      []Produto
-	ValorImpostos float64
+	Produtos       []Produto
+	ValorImpostos  float64
+	ValorDescontos float64
 }
 
 func (o *Orcamento) GetValorOrcamento() float64 {
