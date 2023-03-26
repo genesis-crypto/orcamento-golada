@@ -23,15 +23,25 @@ orcamento-golada/
   │   ├── calculadora-cofins.decorator.go
   │   ├── calculadora-icms.decorator.go
   │   ├── calculadora-ipi.decorator.go
+  │   ├── calculadora-ihit.decorator.go
   │   ├── calculadora-pis.decorator.go
   │   ├── calculadora.go  
   │   └── calculadora.interface.go
   ├── desconto/
+  │   ├── desconto-quantia.chain.go
+  │   ├── desconto-valor.go
+  │   └── desconto.interface.go
   ├── orcamento/
+  │   ├── aprovado.state.go
+  │   ├── emaprovacao.state.go
+  │   ├── finalizado.state.go
   │   ├── orcamento.go
-  │   └── orcamento.interface.go
+  │   ├── orcamento.interface.go
+  │   ├── reprovado.state.go
+  │   └── state.go
   ├── go.mod
   ├── main.mod
+  ├── orcamento-golada.exe
   └── README.md
 ```
 
@@ -40,7 +50,19 @@ A pasta calculadora contém a implementação da calculadora de impostos, com o 
 ## __Design Patterns utilizados__
 
 ### __State Pattern__
+O State Pattern foi utilizado na implementação do orçamento do projeto. Esse padrão de projeto permitiu representar os diferentes estados de um orçamento de forma flexível e fácil de manter.
+
+Foram criadas diferentes struct de estado, como `EmAprovacao`, `Aprovado`, `Reprovado` e `Finalizado`, que implementam uma interface comum IOrcamento. Cada struct de estado define o comportamento do objeto Orcamento para o estado correspondente.
+
+Ao mudar o estado do objeto Orcamento, a referência para a struct de estado correspondente é atualizada, permitindo que o objeto mantenha seu estado atual e execute o comportamento apropriado.
+
 ### __Chain of Responsibility Pattern__
+O Chain of Responsibility Pattern foi utilizado na implementação do desconto do orçamento. Esse padrão de projeto permitiu criar uma cadeia de responsabilidades para o cálculo de descontos em um orçamento, possibilitando que cada elo da cadeia pudesse decidir se aplicaria ou não um desconto e em qual valor.
+
+Foram criadas diferentes structs de desconto, como `DescontoPorValor` e `DescontoPorQuantidade`, que implementam uma interface comum `IHDesconto`. Cada struct de desconto verifica se pode aplicar um desconto no objeto Orcamento e, caso contrário, repassa a solicitação para o próximo elo da cadeia.
+
+Dessa forma, ao adicionar um novo tipo de desconto, basta criar uma nova classe e adicioná-la à cadeia de responsabilidades, sem afetar as outras structs já existentes. Além disso, o Chain of Responsibility Pattern tornou o cálculo de descontos mais flexível e extensível, permitindo que novos tipos de desconto possam ser adicionados à cadeia sem afetar o código existente.
+
 ### __Decorator Pattern__
 O Decorator Pattern foi utilizado na implementação da calculadora de impostos do projeto. Esse padrão de projeto permitiu adicionar comportamentos de cálculo de impostos ao objeto Orcamento de forma flexível e dinâmica, sem alterar sua estrutura original.
 
