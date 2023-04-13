@@ -5,7 +5,9 @@ import (
 	"log"
 	"orcamento-golada/calculadora"
 	"orcamento-golada/desconto"
+	nota_fiscal "orcamento-golada/nota-fiscal"
 	"orcamento-golada/orcamento"
+	"time"
 )
 
 func main() {
@@ -46,4 +48,10 @@ func main() {
 	if err := orcamentoPrincipal.Finaliza(); err != nil {
 		log.Fatalf(err.Error())
 	}
+
+	nf := &nota_fiscal.NotaFiscalBuilder{}
+
+	nf.SetCnpj("12.345.678/0001-99").SetData(time.Now()).SetValorTotal(1000).SetImpostos(10).SetObservacoes("NFS-e").Build()
+
+	fmt.Printf("Nota Fiscal: %+v\n", nf)
 }
