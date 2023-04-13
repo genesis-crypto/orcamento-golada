@@ -39,6 +39,8 @@ orcamento-golada/
   │   ├── orcamento.interface.go
   │   ├── reprovado.state.go
   │   └── state.go
+  ├── nota-fiscal/
+  │   └── nota-fiscal.go
   ├── go.mod
   ├── main.mod
   ├── orcamento-golada.exe
@@ -69,6 +71,11 @@ O Decorator Pattern foi utilizado na implementação da calculadora de impostos 
 Através da criação de "classes concretas ou struct concretas" de decoradores, como PIS, IPI, ICMS e Cofins, que implementam a interface ICalculadora e têm uma referência para o objeto Orcamento, foi possível criar uma "cadeia" de comportamentos que se encadeavam em tempo de execução.
 
 Com o uso do Decorator Pattern, foi possível adicionar mais comportamentos de cálculo de impostos criando novas "classes ou structs" de decoradores, tornando a calculadora de impostos mais flexível e extensível.
+
+### __Builder Pattern__
+O Builder Pattern foi utilizado na implementação do pacote Nota Fiscal. Esse padrão de projeto permitiu criar um construtor flexível e extensível para a criação de notas fiscais com diferentes atributos opcionais.
+
+Foram criadas diferentes structs para os atributos da nota fiscal, como RazaoSocial, Cnpj, ValorTotal, Impostos, Data e Observacoes, que implementam uma interface comum IBuilder. Cada struct verifica se o atributo foi fornecido ao construtor e, caso positivo, adiciona-o à nota fiscal em construção.
 
 ## __Contato__
 Pedro Cardozo - `p-cardozo@hotmail.com` ou `609455@univem.edu.br`
