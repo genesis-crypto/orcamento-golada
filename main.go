@@ -50,7 +50,10 @@ func main() {
 	}
 
 	nf := &nota_fiscal.NotaFiscalBuilder{}
-
+	clientOne := &nota_fiscal.Client{
+		Id: "user@user.com",
+	}
+	nf.AddSubscriber(clientOne)
 	nf.SetCnpj("12.345.678/0001-99").SetData(time.Now()).SetValorTotal(1000).SetImpostos(10).SetObservacoes("NFS-e").Build()
 
 	fmt.Printf("Nota Fiscal: %+v\n", nf)

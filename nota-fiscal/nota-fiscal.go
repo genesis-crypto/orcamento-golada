@@ -2,6 +2,12 @@ package nota_fiscal
 
 import "time"
 
+type Publisher interface {
+	AddSubscriber(subscriber Subscriber)
+	RemoveSubscriber(subscriber Subscriber)
+	notifySubscribers()
+}
+
 type NotaFiscal struct {
 	razaoSocial string
 	cnpj        string
@@ -18,6 +24,7 @@ type NotaFiscalBuilder struct {
 	impostos    float64
 	data        time.Time
 	observacoes string
+	subscribers []Subscriber
 }
 
 func (b *NotaFiscalBuilder) SetRazaoSocial(razaoSocial string) *NotaFiscalBuilder {
@@ -51,12 +58,33 @@ func (b *NotaFiscalBuilder) SetObservacoes(observacoes string) *NotaFiscalBuilde
 }
 
 func (b *NotaFiscalBuilder) Build() NotaFiscal {
-	return NotaFiscal{
+	nf := NotaFiscal{
 		razaoSocial: b.razaoSocial,
 		cnpj:        b.cnpj,
 		valorTotal:  b.valorTotal,
 		impostos:    b.impostos,
 		data:        b.data,
 		observacoes: b.observacoes,
+	}
+	b.notifySubscribers()
+	return nf
+}
+
+func (n *NotaFiscalBuilder) AddSubscriber(subscriber Subscriber) {
+	n.subscribers = append(n.subscribers, subscriber)
+}
+
+func (n *NotaFiscalBuilder) RemoveSubscriber(subscriber Subscriber) {
+	for i, obs := range n.subscribers {
+		if obs == subscriber {
+			n.subscribers = append(n.subscribers[:i], n.subscribers[i+1:]...)
+			break
+		}
+	}
+}
+
+func (n *NotaFiscalBuilder) notifySubscribers() {
+	for _, subscriber := range n.subscribers {
+		subscriber.Update(n.cnpj)
 	}
 }
